@@ -10,7 +10,6 @@ def getfirstnegindex(arr: int) -> int:
             return i
     return -1
 
-
 def getfourthcases(nums: List[int], keys, limit: int, case: str) -> List[int]:
     '''
     case: 'p' for positive, 'n' for negative
@@ -24,9 +23,6 @@ def getfourthcases(nums: List[int], keys, limit: int, case: str) -> List[int]:
         if abs(nums[i]) >= abs(nums[n]):
             i += 1
             j = i+1
-            continue
-        if abs(nums[i] + nums[j]) > abs(nums[n]):
-            n -= 1
             continue
 
         if case == 'n' and abs(nums[i] + nums[j]) in keys:
@@ -79,9 +75,6 @@ class Solution:
                 del nums[i]
             else:
                 i += 1
-        
-        print(nums)
-        print(nums[::-1])
         
         res += getfourthcases(nums, d.keys(), getfirstposindex(nums) - 1, 'n')
         res += getfourthcases(nums[::-1], d.keys(), getfirstnegindex(nums[::-1]) - 1, 'p')
