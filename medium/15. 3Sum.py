@@ -1,10 +1,45 @@
 def getfirstposindex(arr: int) -> int:
-    n = float('-inf')
     for i in range(len(arr)):
-        n = arr[i]
-        if n == 0:
+        if arr[i] >= 0:
             return i
     return -1
+
+def getfirstnegindex(arr: int) -> int:
+    for i in range(len(arr)):
+        if arr[i] <= 0:
+            return i
+    return -1
+
+
+def getfourthcases(nums: List[int], keys, limit: int, case: str) -> List[int]:
+    '''
+    case: 'p' for positive, 'n' for negative
+    '''
+    i = 0
+    j = 1
+    n = len(nums) - 1
+    res = []
+    
+    while i <= limit-1 and n > limit:
+        if abs(nums[i]) >= abs(nums[n]):
+            i += 1
+            j = i+1
+            continue
+        if abs(nums[i] + nums[j]) > abs(nums[n]):
+            n -= 1
+            continue
+
+        if case == 'n' and abs(nums[i] + nums[j]) in keys:
+            res.append([nums[i], nums[j], abs(nums[i] + nums[j])])
+        elif (nums[i] + nums[j])*-1 in keys:
+            res.append([(nums[i] + nums[j])*-1, nums[j], nums[i]])
+
+        j += 1
+        if j > limit:
+            i += 1
+            j = i+1
+    
+    return res
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
@@ -17,15 +52,6 @@ class Solution:
             else:
                 d[n] += 1
         
-        # Three cases
-        '''
-            1. 2*n - m = 0, where n = nums[i] = nums[j] & m = nums[k]
-            2. n + m|=0 + n = 0, , where n = nums[i] = -nums[j] & m = nums[k] = 0
-            3. n + n + n = 0, where n = nums[i] = nums[j] = nums[k] = 0
-            4. n + m + o = 0
-                4.1 where n,m < 0; o > 0
-                4.2 where n < 0; m,o >0
-        '''
         for k in d.keys():
             # First case
             if d[k] >= 2 and k != 0:
@@ -45,6 +71,7 @@ class Solution:
         
         # Fourth case
         nums.sort()
+        
         # removing duplicates of original array
         i = 0
         while i < len(nums):
@@ -52,33 +79,13 @@ class Solution:
                 del nums[i]
             else:
                 i += 1
-        # Fourth case (1)
-        i = 0
-        j = 1
-        n = len(nums) - 1
-        limit = getfirstposindex(nums) - 1
-        print(nums, limit)
-        while True:
-            print(nums[i])
-            if nums[i] <= -nums[n]:
-                i += 1
-                j = i + 1
-            elif nums[i] + nums[j] < -nums[n]:
-                n -= 1
-            else:
-                if -(nums[i] + nums[j]) in d.keys():
-                    res.append([nums[i], nums[j], -(nums[i] + nums[j])])
-                else:
-                    j += 1
-            
-            if j >= limit+1:
-                i += 1
-                j += 1
-                n -= 1
-            
-            if i > limit - 1:
-                break
         
+        print(nums)
+        print(nums[::-1])
+        
+        res += getfourthcases(nums, d.keys(), getfirstposindex(nums) - 1, 'n')
+        res += getfourthcases(nums[::-1], d.keys(), getfirstnegindex(nums[::-1]) - 1, 'p')
+    
         # Removing duplicates
         resdict = {}
         for i in range(len(res)):
