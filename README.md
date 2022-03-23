@@ -1,4 +1,4 @@
-<img align="left" width="40" height="40" src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" alt="Leetcode">
+<img align="left" width="80" height="80" src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" alt="Leetcode">
 
 # Leetcode
 Here you'll find daily problems I'll be resolving, divided into 3 categories:

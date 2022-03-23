@@ -1,4 +1,4 @@
-<img align="left" width="40" height="40" src="https://cdn.worldvectorlogo.com/logos/c--4.svg" alt="Leetcode">
+<img align="left" width="80" height="80" src="https://cdn.worldvectorlogo.com/logos/c--4.svg" alt="Leetcode">
 
 # Documentation
 Here you'll find how to run C# files (.cs extension), for that, you'll need:
